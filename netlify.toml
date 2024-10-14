@@ -1,0 +1,11 @@
+[[redirects]]
+  from = "https://bristolpics.netlify.app/*"
+  to = "https://bristolpictures.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://patwoodcompany.com/*"
+  to = "https://www.bristolpictures.com/:splat"
+  status = 301
+  force = true

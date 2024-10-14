@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="18px" viewBox="0 0 28 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Vid Player Minimize</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Production-Detail" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="D_VideoPlayerControls-Minimize" transform="translate(-1226.000000, -812.000000)">
+            <g id="Vid-Player-Minimize" transform="translate(1226.000000, 812.000000)">
+                <rect id="Rectangle-3" fill-opacity="0.700000048" fill="#FBF8EC" x="0" y="0" width="28" height="18"></rect>
+                <path d="M4,15 L10,15 L10,16 L4,16 L3,16 L3,11 L4,11 L4,15 Z" id="Combined-Shape" fill="#000000"></path>
+                <path d="M19,15 L25,15 L25,16 L19,16 L18,16 L18,11 L19,11 L19,15 Z" id="Combined-Shape-Copy-3" fill="#000000" transform="translate(21.500000, 13.500000) scale(-1, 1) translate(-21.500000, -13.500000) "></path>
+                <path d="M4,6 L10,6 L10,7 L4,7 L3,7 L3,2 L4,2 L4,6 Z" id="Combined-Shape-Copy-2" fill="#000000" transform="translate(6.500000, 4.500000) scale(1, -1) translate(-6.500000, -4.500000) "></path>
+                <path d="M19,6 L25,6 L25,7 L19,7 L18,7 L18,2 L19,2 L19,6 Z" id="Combined-Shape-Copy-4" fill="#000000" transform="translate(21.500000, 4.500000) scale(-1, -1) translate(-21.500000, -4.500000) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

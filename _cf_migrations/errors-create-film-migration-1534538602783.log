@@ -1,0 +1,66 @@
+ValidationFailed: {
+  "status": 422,
+  "statusText": "Unprocessable Entity",
+  "message": "Validation error",
+  "details": {
+    "errors": [
+      {
+        "name": "regexp",
+        "details": "Does not match /^[a-zA-Z][a-zA-Z0-9_]*$/",
+        "value": "video-id",
+        "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$",
+        "path": [
+          "fields",
+          2,
+          "id"
+        ]
+      }
+    ]
+  },
+  "request": {
+    "url": "https://api.contentful.com:443/spaces/tmcmba092hqb/environments/master/content_types/film",
+    "headers": {
+      "Accept": "application/json, text/plain, */*",
+      "Content-Type": "application/vnd.contentful.management.v1+json",
+      "X-Contentful-User-Agent": "app contentful.migration-cli/0.7.0; sdk contentful-management.js/4.2.2; platform node.js/v8.10.0; os macOS/17.7.0;",
+      "Authorization": "Bearer ...ea1b4",
+      "user-agent": "node.js/v8.10.0",
+      "Accept-Encoding": "gzip",
+      "X-Contentful-Version": 0,
+      "Content-Length": 262
+    },
+    "method": "put",
+    "payloadData": "{\"name\":\"Film\",\"fields\":[{\"id\":\"title\",\"name\":\"Title\",\"type\":\"Symbol\",\"required\":true},{\"id\":\"description\",\"name\":\"Description\",\"type\":\"Text\"},{\"id\":\"video-id\",\"name\":\"Vimeo Video ID\",\"type\":\"Symbol\",\"required\":true}],\"description\":\"Bristol Pics Portfolio Film\"}"
+  },
+  "requestId": "6479e41a94c2a47046b9e3203c4d7d17"
+}
+    at errorHandler (/Users/wilmthoben/.config/yarn/global/node_modules/contentful-migration-cli/node_modules/contentful-management/dist/contentful-management.node.js:693:15)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)NotFound: {
+  "status": 404,
+  "statusText": "Not Found",
+  "message": "The resource could not be found.",
+  "details": {
+    "type": "ContentType",
+    "id": "film",
+    "environment": "master",
+    "space": "tmcmba092hqb"
+  },
+  "request": {
+    "url": "https://api.contentful.com:443/spaces/tmcmba092hqb/environments/master/content_types/film/published",
+    "headers": {
+      "Accept": "application/json, text/plain, */*",
+      "Content-Type": "application/vnd.contentful.management.v1+json",
+      "X-Contentful-User-Agent": "app contentful.migration-cli/0.7.0; sdk contentful-management.js/4.2.2; platform node.js/v8.10.0; os macOS/17.7.0;",
+      "Authorization": "Bearer ...ea1b4",
+      "user-agent": "node.js/v8.10.0",
+      "Accept-Encoding": "gzip",
+      "X-Contentful-Version": 1
+    },
+    "method": "put"
+  },
+  "requestId": "80f089cb2e90241de92199f61e709da8"
+}
+    at errorHandler (/Users/wilmthoben/.config/yarn/global/node_modules/contentful-migration-cli/node_modules/contentful-management/dist/contentful-management.node.js:693:15)
+    at <anonymous>
+    at process._tickCallback (internal/process/next_tick.js:188:7)

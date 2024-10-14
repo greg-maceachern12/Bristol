@@ -1,0 +1,26 @@
+// Mobile display classes
+
+.mobile-only
+  display: block
+  @media only screen and (min-width: $sm)
+    display: none
+.desktop-tablet-only
+  display: none
+  @media only screen and (min-width: $sm)
+    display: block
+.desktop-only
+  display: none
+  @media only screen and (min-width: $m)
+    display: block
+.tablet-only
+  display: none
+  @media only screen and (min-width: $sm) and (max-width: $m)
+    display: block
+.mobile-only-flex
+  display: flex !important
+  @media only screen and (min-width: $sm)
+    display: none !important
+.desktop-tablet-only-flex
+  display: none !important
+  @media only screen and (min-width: $sm)
+    display: flex !important

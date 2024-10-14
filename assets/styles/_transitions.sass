@@ -1,0 +1,12 @@
+/* Vue transition classes */
+
+.fade-enter-active, .fade-leave-active
+  transition: opacity 1s
+
+.fade-enter, .fade-leave-to
+  opacity: 0
+
+body
+	&.disable-transitions
+		*
+			transition: none !important

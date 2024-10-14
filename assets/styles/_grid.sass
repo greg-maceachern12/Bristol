@@ -1,0 +1,161 @@
+// @import './_variables.sass'
+
+// Girlboss Grid
+
+.grid
+  margin: auto
+  width: $wrapper_width_mobile
+  padding-left: 0
+  padding-right: 0
+  box-sizing: border-box
+  //position: absolute
+  top: 0
+  left: 0
+  *, *:before, *:after
+    box-sizing: inherit
+  &.no-margin
+    margin-right: 0
+    margin-left: 0
+  @media only screen and (min-width: $m)
+    margin: auto
+    width: $wrapper_width
+    padding-left: 0
+    padding-right: 0
+
+// TODO: Improve overflow of row with n-children
+.row
+  padding-bottom: 4rem
+  &.no-margin
+    padding-bottom: 0
+  >:last-child
+    margin-right: 0
+  &.tile
+    padding-bottom: 0
+
+.row:before, .row:after
+  content: ""
+  display: table
+  clear: both
+
+[class*='col-']
+  float: left
+  min-height: 1px
+  margin-right: $gutter_width_sm
+  margin-bottom: $row_gutter
+  &.no-margin
+    margin-bottom: 0
+  @media only screen and (min-width: $sm)
+    margin-right: $gutter_width_lg
+
+.row
+  >.col-0-xs
+    width: 0
+  >.col-1-xs
+    width: $col_width_sm
+  >.col-2-xs
+    width: ($col_width_sm * 2) + $gutter_width_sm
+  >.col-3-xs
+    width: ($col_width_sm * 3) + ($gutter_width_sm * 2)
+  >.col-4-xs
+    width: ($col_width_sm * 4) + ($gutter_width_sm * 3)
+  >.col-5-xs
+    width: ($col_width_sm * 5) + ($gutter_width_sm * 4)
+  >.col-6-xs
+    width: ($col_width_sm * 6) + ($gutter_width_sm * 5)
+  >.off-1-xs
+    margin-left: $col_width_sm + $gutter_width_sm
+  >.off-2-xs
+    margin-left: ($col_width_sm * 2) + $gutter_width_sm
+  >.off-3-xs
+    margin-left: ($col_width_sm * 3) + ($gutter_width_sm * 2)
+  >.off-4-xs
+    margin-left: ($col_width_sm * 4) + ($gutter_width_sm * 3)
+  >.off-5-xs
+    margin-left: ($col_width_sm * 5) + ($gutter_width_sm * 4)
+  >.off-6-xs
+    margin-left: ($col_width_sm * 6) + ($gutter_width_sm * 5)
+
+  @media only screen and (min-width: $m)
+    >.col-1-xs, .col-2-xs, .col-3-xs, .col-4-xs, .col-5-xs, .col-6-xs
+      width: unset
+    >.off-1-xs, .off-2-xs, .off-3-xs, .off-4-xs, .off-5-xs, .off-6-xs
+      margin-left: 0
+    >.col-1-lg
+      width: $col_width_lg
+    >.col-2-lg
+      width: ($col_width_lg * 2) + $gutter_width_lg
+    >.col-3-lg
+      width: ($col_width_lg * 3) + ($gutter_width_lg * 2)
+    >.col-4-lg
+      width: ($col_width_lg * 4) + ($gutter_width_lg * 3)
+    >.col-5-lg
+      width: ($col_width_lg * 5) + ($gutter_width_lg * 4)
+    >.col-6-lg
+      width: ($col_width_lg * 6) + ($gutter_width_lg * 5)
+    >.col-7-lg
+      width: ($col_width_lg * 7) + ($gutter_width_lg * 6)
+    >.col-8-lg
+      width: ($col_width_lg * 8) + ($gutter_width_lg * 7)
+    >.col-9-lg
+      width: ($col_width_lg * 9) + ($gutter_width_lg * 8)
+    >.col-10-lg
+      width: ($col_width_lg * 10) + ($gutter_width_lg * 9)
+    >.col-11-lg
+      width: ($col_width_lg * 11) + ($gutter_width_lg * 10)
+    >.col-12-lg
+      width: ($col_width_lg * 12) + ($gutter_width_lg * 11)
+    >.off-1-lg
+      margin-left: $col_width_lg + $gutter_width_lg
+    >.off-2-lg
+      margin-left: ($col_width_lg * 2) + ($gutter_width_lg * 2)
+    >.off-3-lg
+      margin-left: ($col_width_lg * 3) + ($gutter_width_lg * 3)
+    >.off-4-lg
+      margin-left: ($col_width_lg * 4) + ($gutter_width_lg * 4)
+    >.off-5-lg
+      margin-left: ($col_width_lg * 5) + ($gutter_width_lg * 5)
+    >.off-6-lg
+      margin-left: ($col_width_lg * 6) + ($gutter_width_lg * 6)
+    >.off-7-lg
+      margin-left: ($col_width_lg * 7) + ($gutter_width_lg * 7)
+    >.off-8-lg
+      margin-left: ($col_width_lg * 8) + ($gutter_width_lg * 8)
+    >.off-9-lg
+      margin-left: ($col_width_lg * 9) + ($gutter_width_lg * 9)
+    >.off-10-lg
+      margin-left: ($col_width_lg * 10) + ($gutter_width_lg * 10)
+    >.off-11-lg
+      margin-left: ($col_width_lg * 11) + ($gutter_width_lg * 11)
+
+
+.flex
+  display: -webkit-box
+  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+  display: -ms-flexbox
+  /* TWEENER - IE 10 */
+  display: -webkit-flex
+  /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+  display: flex
+  -ms-flex: 0 1 auto
+  -webkit-box-flex: 0
+  flex: 0 1 auto
+  -ms-flex-direction: row
+  -webkit-box-orient: horizontal
+  -webkit-box-direction: normal
+  flex-direction: row
+  -ms-flex-wrap: wrap
+  flex-wrap: wrap
+  >.col
+    box-sizing: border-box
+    -ms-flex: 0 0 auto
+    -webkit-box-flex: 0
+    flex: 0 0 auto
+    position: relative
+    margin: 0
+  .col-sm-6
+      flex-basis: calc(100% * (6 / 6))
+      max-width: calc(100% * (6 / 6))
+  @media only screen and (min-width: $m)
+    >.col-lg-3
+      flex-basis: calc(100% * (3 / 12))
+      max-width: calc(100% * (3 / 12))

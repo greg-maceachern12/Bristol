@@ -1,0 +1,57 @@
+// Transforms
+@mixin transform($transforms)
+  -webkit-transform: $transforms
+  -moz-transform: $transforms
+  -ms-transform: $transforms
+  transform: $transforms
+
+// Translate
+@mixin translateX ($x)
+  @include transform(translate3d($x, 0, 0))
+
+@mixin translateY ($y)
+  @include transform(translate3d(0, $y, 0))
+
+// User Select
+@mixin no-select
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+  -khtml-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+
+// Transition Mixin
+@mixin transition($transition-property, $transition-time, $method)
+  -webkit-transition: $transition-property $transition-time $method
+  -moz-transition: $transition-property $transition-time $method
+  -ms-transition: $transition-property $transition-time $method
+  -o-transition: $transition-property $transition-time $method
+  transition: $transition-property $transition-time $method
+
+// Placeholder Mixin
+@mixin placeholder
+  &::-webkit-input-placeholder
+    @content
+  &:-moz-placeholder
+    @content
+  &::-moz-placeholder
+    @content
+  &:-ms-input-placeholder
+    @content
+
+// Responsive
+
+@mixin respond-to($media)
+  @if $media == xs
+    @media only screen and (max-width: 35.5em)
+      @content
+  @else if $media == ms
+    @media only screen and (min-width: 35.5em ) and (max-width: 48em )
+      @content
+  @else if $media == md
+    @media only screen and (min-width: 48em ) and (max-width: 64em )
+      @content
+  @else if $media == lg
+    @media only screen and (min-width: 64em)
+      @content
