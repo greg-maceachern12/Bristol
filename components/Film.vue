@@ -28,6 +28,7 @@
                 p.film-premiere
                   | {{ premiereSentence }}
       credits(:fields="this.fields")
+      awards(:fields="this.fields")
       slideshow(:slides="stills" :class="{ nopress: press.length === 0 }")
       .grid.press(v-if="press.length > 0")
         .row.no-margin(v-for="item in press")
@@ -40,6 +41,7 @@ import Press from "./Press.vue";
 import Slideshow from "./Slideshow.vue";
 import VideoPlayer from "./VideoPlayer.vue";
 import Credits from "./Credits.vue";
+import Awards from "./Awards.vue"; 
 import VueMarkdown from "vue-markdown";
 import {mapGetters} from "vuex";
 
@@ -52,6 +54,7 @@ export default {
 
   components: {
     Credits,
+    Awards,
     Press,
     Slideshow,
     VideoPlayer,

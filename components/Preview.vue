@@ -53,6 +53,7 @@
                       :key="`sizzleText_${index}`"
                     ) {{ sizzleText }}
     credits(:fields="this.fields" :preview="true")
+    awards(:fields="this.fields" :preview="true")
     transition(name="fade")
       slideshow.stills(:slides="stills")
     transition(name="fade" v-if="contactEmail")
@@ -68,7 +69,7 @@ import { mapGetters } from 'vuex'
 import Slideshow from './Slideshow.vue'
 import axios from 'axios'
 import Credits from "./Credits";
-
+import Awards from "./Awards.vue"; 
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 
@@ -90,6 +91,7 @@ export default {
 
   components: {
     Credits,
+    Awards,
     Slideshow
   },
 

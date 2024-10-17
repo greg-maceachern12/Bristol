@@ -32,6 +32,7 @@ export default {
   mounted() {
     this.credits = [];
     if (this.fields.credits) {
+      console.log(this.fields.credits)
       Object.keys(this.fields.credits).map(col => {
         let column = [];
         Object.keys(this.fields.credits[col]).map(role => {
@@ -54,6 +55,7 @@ export default {
         this.credits.push(column);
       })
     }
+    // console.log(this.credits)
     this.measureCredits();
     return this.credits
   },

@@ -6,6 +6,9 @@
           img(:src="navLogoSrc" :alt="navLogoAlt" v-if="navLogoSrc")
       ul(:class="{ white: getWhite }" v-if="!mobile")
         li
+          nuxt-link(to="/reels")
+            | REELS
+        li
           nuxt-link(to="/about")
             | ABOUT
         li
@@ -216,16 +219,16 @@ header
       display: none
       @media only screen and (min-width: $m)
         display: flex
+        
 
       &.white
         li
           color: $geyser
-
+          
       li
+        padding-left: 4rem
         a
           color: $geyser
-        &:nth-of-type(2)
-          padding-left: 4rem
 
   .mobile-nav-items
     width: 100vw
