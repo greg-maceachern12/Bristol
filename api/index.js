@@ -57,5 +57,12 @@ export default {
     return client.getEntries({
       'content_type': 'press'
     })
+  },
+
+  getReels() {
+    return client.getEntries({
+      'content_type': 'reels',
+      order: '-sys.createdAt' // Orders by newest first, remove if you want different ordering
+    })
   }
 }
