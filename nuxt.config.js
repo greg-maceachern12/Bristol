@@ -1,4 +1,14 @@
-const config = require("./.contentful.json");
+let config;
+try {
+  config = require("./.contentful.json");
+} catch (e) {
+  config = {
+    CTF_SPACE_ID: process.env.CTF_SPACE_ID,
+    CTF_CDA_ACCESS_TOKEN: process.env.CTF_CDA_ACCESS_TOKEN,
+    CTF_ENVIRONMENT: process.env.CTF_ENVIRONMENT
+  };
+}
+
 const contentful = require("contentful");
 const client = contentful.createClient({
   space: config.CTF_SPACE_ID,
