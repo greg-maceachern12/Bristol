@@ -229,6 +229,8 @@ header
         padding-left: 4rem
         a
           color: $geyser
+          &[href="/reels"]
+            color: yellow
 
   .mobile-nav-items
     width: 100vw

@@ -6,14 +6,15 @@
           | {{ reels[0].bio }}
         .awards
           h1 AWARDS
-          .toggle-awards(@click="toggleAwards")
-            figure.arrow-icon
-              img(src="../../assets/images/arrow_right_geyser.svg")
           .row.no-margin
             .col-12
-              .award-category(v-for="(awards, category) in awardsData" :key="category")
-                h3 {{ category }}
-                .entries
+              .award-category(v-for="(awards, category) in awardsData" :key="category" :class="{ collapsed: collapsedCategories[category] }")
+                .category-header
+                  h3 {{ category }}
+                  .toggle-awards(@click="toggleCategory(category)")
+                    figure.arrow-icon
+                      img(src="../../assets/images/arrow_right_geyser.svg")
+                .entries(:style="getEntriesStyle(category)" ref="entries")
                   p(v-for="award in awards" :key="award") {{ award }}
       .loading(v-else)
         | Loading...
@@ -30,7 +31,8 @@
   
     data() {
       return {
-        collapsed: false,
+        collapsedCategories: {},
+        categoryHeights: {},
         entries: [],
         awardsHeight: 0,
         awardsData: {}
@@ -58,14 +60,42 @@
             this.awardsData[category] = awards.map(award => 
               award.replace(/^(Title:|Award:)/, '').trim()
             );
+            // Initialize collapse state for each category
+            this.$set(this.collapsedCategories, category, false);
           });
           this.entries = Object.values(this.awardsData).flat();
+          
+          // Calculate initial heights after DOM update
+          this.$nextTick(() => {
+            this.calculateHeights();
+          });
         }
       },
   
-      toggleAwards() {
-        this.collapsed = !this.collapsed;
-        this.measureAwards();
+      calculateHeights() {
+        if (!this.$refs.entries) return;
+        
+        // If entries is a single element, wrap it in an array
+        const entriesElements = Array.isArray(this.$refs.entries) 
+          ? this.$refs.entries 
+          : [this.$refs.entries];
+  
+        entriesElements.forEach((el, index) => {
+          const category = Object.keys(this.awardsData)[index];
+          this.$set(this.categoryHeights, category, el.scrollHeight + 'px');
+        });
+      },
+  
+      getEntriesStyle(category) {
+        return {
+          height: this.collapsedCategories[category] ? '0px' : this.categoryHeights[category]
+        };
+      },
+  
+      toggleCategory(category) {
+        // Ensure height is calculated before toggling
+        this.calculateHeights();
+        this.$set(this.collapsedCategories, category, !this.collapsedCategories[category]);
       },
   
       measureAwards() {
@@ -86,6 +116,11 @@
       this.whiteNav(false);
       this.parseAwards();
       this.measureAwards();
+      window.addEventListener('resize', this.calculateHeights);
+    },
+  
+    beforeDestroy() {
+      window.removeEventListener('resize', this.calculateHeights);
     },
   
     watch: {
@@ -98,6 +133,9 @@
       },
       mobile() {
         this.measureAwards();
+        this.$nextTick(() => {
+          this.calculateHeights();
+        });
       }
     },
   
@@ -112,23 +150,23 @@
   <style lang="sass">
   @import '../../assets/styles/_variables.sass'
   @import '../../assets/styles/_mixins.sass'
-
+  
   .reels
     height: calc(100vh - 6.4rem)
     /* background-color: $leather */
     @media only screen and (min-width: $m)
       height: 100vh
-
+  
   .content
-    width: 78.8rem
+    width: 98.8rem
     padding: 0 2rem
-    margin-top: 10rem  // Add space from top
+    margin-top: 20rem  // Increased from 10rem
     @media only screen and (min-width: $m)
       padding: 0
-      margin: 12rem auto 0  // Slightly more space on desktop
-
+      margin: 24rem auto 0  // Increased from 12rem
+  
     .bio
-      margin: 0 auto 6rem  // Center and add space before awards
+      margin: 0 auto 6rem
       
     .loading
       text-align: center
@@ -147,11 +185,11 @@
       border-top: $geyser solid 1px
       border-bottom: $geyser solid 1px
       position: relative
-
+  
       h1
         color: $geyser
         padding-bottom: 4rem
-
+  
       h2, h3
         color: $geyser
         
@@ -165,28 +203,32 @@
         margin-bottom: 15px
         font-weight: bold
   
-      .toggle-awards
-        cursor: pointer
-        right: 30px
-        top: 25px
-        position: absolute
-        transform: rotate(-90deg)
-        @include transition(transform, 0.3s, ease)
-  
-        img
-          height: 20px
-          @media only screen and (min-width: $m)
-            height: 25px
-  
-      &.collapsed
-        .toggle-awards
-          transform: rotate(90deg)
-        .row
-          height: 0
-          overflow: hidden
-  
       .award-category
         margin-bottom: 30px
+  
+        .category-header
+          display: flex
+          justify-content: space-between
+          align-items: center
+          margin-bottom: 15px
+  
+        .toggle-awards
+          cursor: pointer
+          transform: rotate(-90deg)
+          @include transition(transform, 0.3s, ease)
+  
+          img
+            height: 20px
+            @media only screen and (min-width: $m)
+              height: 25px
+  
+        .entries
+          transition: height 0.3s ease
+          overflow: hidden
+  
+        &.collapsed
+          .toggle-awards
+            transform: rotate(90deg)
         
         .entries
           p
