@@ -3,7 +3,13 @@
     nav(:class="[{ leather: getMobileNavActive || transparentBackground }, { hide: hideMenu && !home && !mobile }, { black: solidBG && !transparentBackground && !home || mobile && !getMobileNavActive && getWhite }]")
       nuxt-link(to="/").home-link
         figure.logo
-          img(:src="navLogoSrc" :alt="navLogoAlt" v-if="navLogoSrc")
+          img(
+            :src="currentLogoSrc"
+            :alt="navLogoAlt"
+            v-if="navLogoSrc"
+            @mouseenter="handleMouseEnter"
+            @mouseleave="handleMouseLeave"
+          )
       ul(:class="{ white: getWhite }" v-if="!mobile")
         li
           nuxt-link(to="/reels")
@@ -24,130 +30,156 @@
         li(@click="activateMenu")
           nuxt-link(to="/contact")
             | CONTACT
-</template>
+  </template>
+  
+  <script>
+  import SvgFiller from 'vue-svg-filler'
+  import {mapGetters, mapActions} from 'vuex'
+  
+  export default {
+    data() {
+      return {
+        white: '#fbf8ec',
+        dark: '#060606',
+        solidBG: false,
+        lastScroll: 0,
+        hideMenu: false,
+        scrollDir: 'down',
+        hamburger: '<svg width="26px" height="8px" viewBox="0 0 26 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Production-Detail" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="D_VideoPlayerControls" transform="translate(-829.000000, -790.000000)" fill="#FBF8EC"><g id="M_Hamburger" transform="translate(829.000000, 790.000000)"><rect id="Rectangle-3" x="0" y="0" width="26" height="1"></rect><rect id="Rectangle-3-Copy" x="0" y="7" width="26" height="1"></rect></g></g></g></svg>',
+        currentLogoSrc: null
+      }
+    },
+  
+    components: {
+      SvgFiller
+    },
+  
+    computed: {
+      ...mapGetters({
+        getWhite: 'navigation/getWhite',
+        getMobileNavActive: 'navigation/getMobileNavActive',
+        mobile: 'navigation/getMobile',
+        getScrollPos: 'navigation/getScrollPos',
+        navLogoSrc: 'navigation/getNavLogoSrc',
+        navLogoAlt: 'navigation/getNavLogoAlt',
+        navLogoHoverSrc: 'navigation/getNavLogoHoverSrc',
+        faviconSrc: 'navigation/getFaviconSrc'
+      }),
+  
+      transparentBackground() {
+        return this.$route.path === '/about' || this.$route.path === '/contact'
+      },
+  
+      home() {
+        return this.$route.path === '/'
+      },
 
-<script>
-import SvgFiller from 'vue-svg-filler'
-import {mapGetters, mapActions} from 'vuex'
+      logoGifSrc() {
+      // Replace with your actual GIF path
+      return require('@/assets/images/animated_logo.gif')
+      },
+    },
 
-export default {
-  data() {
-    return {
-      white: '#fbf8ec',
-      dark: '#060606',
-      solidBG: false,
-      lastScroll: 0,
-      hideMenu: false,
-      scrollDir: 'down',
-      hamburger: '<svg width="26px" height="8px" viewBox="0 0 26 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Production-Detail" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="D_VideoPlayerControls" transform="translate(-829.000000, -790.000000)" fill="#FBF8EC"><g id="M_Hamburger" transform="translate(829.000000, 790.000000)"><rect id="Rectangle-3" x="0" y="0" width="26" height="1"></rect><rect id="Rectangle-3-Copy" x="0" y="7" width="26" height="1"></rect></g></g></g></svg>'
+    watch: {
+    navLogoSrc: {
+      immediate: true,
+      handler(newVal) {
+        this.currentLogoSrc = newVal
+      }
     }
   },
+  
+    methods: {
+      ...mapActions({
+        toggleMobile: 'navigation/changeMobileState',
+        toggleMobileNavActive: 'navigation/changeMobileNavState',
+        saveScrollPos: 'navigation/saveScrollPos',
+        whiteNav: 'navigation/whiteNav'
+      }),
 
-  components: {
-    SvgFiller
-  },
-
-  computed: {
-    ...mapGetters({
-      getWhite: 'navigation/getWhite',
-      getMobileNavActive: 'navigation/getMobileNavActive',
-      mobile: 'navigation/getMobile',
-      getScrollPos: 'navigation/getScrollPos',
-      navLogoSrc: 'navigation/getNavLogoSrc',
-      navLogoAlt: 'navigation/getNavLogoAlt',
-      faviconSrc: 'navigation/getFaviconSrc'
-    }),
-
-    transparentBackground() {
-      return this.$route.path === '/about' || this.$route.path === '/contact'
+      handleMouseEnter() {
+      this.currentLogoSrc = this.logoGifSrc
     },
 
-    home() {
-      return this.$route.path === '/'
+    handleMouseLeave() {
+      this.currentLogoSrc = this.navLogoSrc
     },
-  },
-
-  methods: {
-    ...mapActions({
-      toggleMobile: 'navigation/changeMobileState',
-      toggleMobileNavActive: 'navigation/changeMobileNavState',
-      saveScrollPos: 'navigation/saveScrollPos',
-      whiteNav: 'navigation/whiteNav'
-    }),
-
-    activateMenu() {
-      this.toggleMobileNavActive()
-      if (this.$route.name === 'about' || this.$route.name === 'contact') {
-        this.whiteNav(false)
-      } else {
-        this.whiteNav(!this.getWhite)
-      }
-    },
-
-    handleScroll(e) {
-      if (window.scrollY <= 100) {
-        this.saveScrollPos(window.scrollY / 100)
-      } else if (this.getScrollPos !== 0) {
-        this.saveScrollPos(1)
-      }
-
-      if (window.scrollY <= window.innerHeight) {
-        this.solidBG = false
-      } else {
-        if (this.scrollDir !== 'down') {
-          this.solidBG = true
+  
+      activateMenu() {
+        this.toggleMobileNavActive()
+        if (this.$route.name === 'about' || this.$route.name === 'contact') {
+          this.whiteNav(false)
+        } else {
+          this.whiteNav(!this.getWhite)
         }
-      }
-
-      if (window.scrollY > this.lastScroll) {
-        if (window.scrollY >= window.innerHeight) {
-          this.hideMenu = true
+      },
+  
+      handleScroll(e) {
+        if (window.scrollY <= 100) {
+          this.saveScrollPos(window.scrollY / 100)
+        } else if (this.getScrollPos !== 0) {
+          this.saveScrollPos(1)
         }
-        this.scrollDir = 'down'
-      } else {
-        this.hideMenu = false
-        this.scrollDir = 'up'
+  
+        if (window.scrollY <= window.innerHeight) {
+          this.solidBG = false
+        } else {
+          if (this.scrollDir !== 'down') {
+            this.solidBG = true
+          }
+        }
+  
+        if (window.scrollY > this.lastScroll) {
+          if (window.scrollY >= window.innerHeight) {
+            this.hideMenu = true
+          }
+          this.scrollDir = 'down'
+        } else {
+          this.hideMenu = false
+          this.scrollDir = 'up'
+        }
+  
+        this.lastScroll = window.scrollY
       }
-
-      this.lastScroll = window.scrollY
-    }
-  },
-
-  mounted() {
-    let handleMobileBreakPoint = (mql) => {
-      this.toggleMobile(mql.matches)
-    }
-    let mql = window.matchMedia('(max-width: 769px)')
-    mql.addEventListener("change", () => {
+    },
+  
+    mounted() {
+      let handleMobileBreakPoint = (mql) => {
+        this.toggleMobile(mql.matches)
+      }
+      let mql = window.matchMedia('(max-width: 769px)')
+      mql.addEventListener("change", () => {
+        handleMobileBreakPoint(mql);
+      });
       handleMobileBreakPoint(mql);
-    });
-    handleMobileBreakPoint(mql);
-
-    window.addEventListener('scroll', this.handleScroll)
-
-    //Fetch
-    Promise.all([
-      this.$store.dispatch("navigation/fetchGeneralSettings"),
-    ]);
-
-    //Set favicon
-    let link = document.querySelector("link[rel~='icon']");
-    if (link && this.faviconSrc) {
-      link.href = this.faviconSrc;
+  
+      window.addEventListener('scroll', this.handleScroll)
+  
+      //Fetch
+      Promise.all([
+        this.$store.dispatch("navigation/fetchGeneralSettings"),
+      ]);
+  
+      //Set favicon
+      let link = document.querySelector("link[rel~='icon']");
+      if (link && this.faviconSrc) {
+        link.href = this.faviconSrc;
+      }
+    },
+  
+    destroy() {
+      window.removeEventListener('scroll', this.handleScroll(e))
     }
-  },
-
-  destroy() {
-    window.removeEventListener('scroll', this.handleScroll(e))
   }
-}
-</script>
-
-<style lang="sass">
+  </script>
+  
+  <style lang="sass">
 @import '../assets/styles/_variables.sass'
+
 header
   z-index: 99999
   position: fixed
+  
   nav
     height: 6.4rem
     margin-top: 0
@@ -184,19 +216,24 @@ header
 
       .logo
         padding-left: 2rem
-        //width: 1.8rem
-        width: 100%
         height: 3.2rem
+        display: flex
+        align-items: center
+        
         @media only screen and (min-width: $m)
-          //width: 2.7rem
-          width: 100%
           height: 4.9rem
           padding-left: 3.5rem
+        
         img
-          width: 100%
           height: 100%
+          width: auto
+          object-fit: contain
+          max-width: none
+          transition: opacity 0.3s ease-in-out
+          
           @media only screen and (max-width: $m)
-            width: 40px
+            height: 40px
+            width: auto
 
     .hamburger
       width: 2.6rem
@@ -219,7 +256,6 @@ header
       display: none
       @media only screen and (min-width: $m)
         display: flex
-        
 
       &.white
         li

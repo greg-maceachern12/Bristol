@@ -28,12 +28,15 @@ export const mutations = {
     if (!generalData.navigationLogo) {
       generalData.navigationLogo = {
         "src": require("../assets/images/nav_logo.png"),
+        "hoverSrc": require("../assets/images/animated_logo.gif"), // Add your GIF here
         "alt": "Bristol Pictures",
       };
     } else {
+      const baseUrl = "https:" + generalData.navigationLogo.fields.file.url;
       generalData.navigationLogo = {
-        "src": "https:" + generalData.navigationLogo.fields.file.url,
-        "alt": generalData.navigationLogo.fields.description,
+        "src": baseUrl,
+        "hoverSrc": baseUrl, // Default to same as src if no hover file exists
+        "alt": generalData.navigationLogo.fields.description || "Bristol Pictures",
       }
     }
 
@@ -100,6 +103,10 @@ export const getters = {
 
   getNavLogoSrc: function (state) {
     return state.general.navigationLogo ? state.general.navigationLogo.src : '';
+  },
+
+  getNavLogoHoverSrc: function (state) {
+    return state.general.navigationLogo ? state.general.navigationLogo.hoverSrc : '';
   },
 
   getNavLogoAlt: function (state) {
